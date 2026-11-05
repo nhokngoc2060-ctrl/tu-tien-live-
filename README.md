@@ -1,1 +1,85 @@
-# tu-tien-live-
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu Tiên LIVE 2D - Overlay 720x1280</title>
+<style>
+*{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#071426;color:#f7f0dc;font-family:Georgia,"Times New Roman",serif}
+#stage{position:relative;width:720px;height:1280px;transform-origin:top left;overflow:hidden;background:
+ radial-gradient(ellipse at 50% 48%,rgba(159,216,255,.55),transparent 34%),
+ linear-gradient(180deg,#10294d 0%,#37658b 26%,#b8d5e4 52%,#6689a2 72%,#102849 100%)}
+#stage:before{content:"";position:absolute;inset:0;background:
+ radial-gradient(ellipse at 20% 40%,rgba(255,255,255,.34),transparent 22%),
+ radial-gradient(ellipse at 80% 36%,rgba(255,255,255,.25),transparent 24%),
+ repeating-linear-gradient(115deg,transparent 0 70px,rgba(255,255,255,.035) 71px 73px);pointer-events:none}
+.moon{position:absolute;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff9df,#e8d9a7 58%,#9dbbd1);top:150px;left:255px;box-shadow:0 0 70px #d8f1ff88}
+.mountain{position:absolute;bottom:390px;width:0;height:0;border-left:220px solid transparent;border-right:220px solid transparent;border-bottom:360px solid #24496b;opacity:.8}
+.m1{left:-100px}.m2{right:-90px;border-bottom-color:#345f7d}
+.palace{position:absolute;left:110px;right:110px;top:345px;height:210px;border-bottom:8px solid #e6d8b2;filter:drop-shadow(0 10px 8px #0b244a88)}
+.roof{position:absolute;left:0;right:0;top:0;height:75px;background:linear-gradient(180deg,#f0d58c,#a66c38);clip-path:polygon(0 75%,10% 45%,20% 20%,50% 0,80% 20%,90% 45%,100% 75%,90% 70%,50% 28%,10% 70%)}
+.columns{position:absolute;left:45px;right:45px;top:62px;height:140px;border-left:12px solid #f0dfb9;border-right:12px solid #f0dfb9;background:repeating-linear-gradient(90deg,transparent 0 65px,#e8d5ae 66px 78px,transparent 79px 125px)}
+.steps{position:absolute;left:80px;right:80px;top:545px;height:250px;background:repeating-linear-gradient(180deg,#d9e5e8 0 18px,#a6bdca 19px 23px);clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);opacity:.75}
+.title{position:absolute;top:35px;left:25px;right:25px;text-align:center;font-size:43px;letter-spacing:5px;color:#ffe7a0;text-shadow:0 3px 2px #6d3d16,0 0 15px #fff}
+.subtitle{position:absolute;top:92px;width:100%;text-align:center;font: bold 18px Arial;color:#e7f5ff;letter-spacing:3px}
+.panel{background:linear-gradient(135deg,#102947ee,#07182feF);border:2px solid #d8bb79;border-radius:18px;box-shadow:0 6px 20px #06152c88}
+.stats{position:absolute;top:135px;left:22px;right:22px;height:74px;display:flex;align-items:center;justify-content:space-around;font: bold 19px Arial}
+.stat{text-align:center}.stat small{display:block;color:#bcd9ef;font-size:12px;margin-bottom:4px}
+.rank{position:absolute;top:230px;left:22px;width:260px;padding:14px 14px 12px}
+.rank h3,.rules h3{margin:0 0 10px;color:#ffe5a0;font-size:21px;text-align:center;letter-spacing:2px}
+.entry{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid #8daec455;font: bold 16px Arial}
+.entry:last-child{border:0}.num{color:#ffdb7c;width:22px}.name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.score{color:#9ee6ff;font-size:13px}
+.rules{position:absolute;top:230px;right:22px;width:170px;padding:13px 12px;font:14px/1.55 Arial}
+.rules p{margin:6px 0;color:#e4f3ff}.rules b{color:#ffe49b}
+.stage-label{position:absolute;top:590px;left:0;right:0;text-align:center;font-size:23px;letter-spacing:3px;color:#fff5d2;text-shadow:0 2px 5px #17385a}
+.avatar{position:absolute;top:720px;width:112px;text-align:center;animation:float 3s ease-in-out infinite}
+.avatar .aura{width:78px;height:78px;margin:auto;border-radius:50%;background:radial-gradient(circle,#fff9d8,#b5e8ff88 48%,transparent 72%);display:grid;place-items:center;font-size:48px;filter:drop-shadow(0 0 10px #fff)}
+.avatar .label{margin-top:4px;background:#102847d9;border:1px solid #e5ce91;border-radius:9px;padding:5px 4px;font: bold 13px Arial;color:#fff}
+.a1{left:65px;top:760px}.a2{left:235px;top:680px;animation-delay:.5s}.a3{right:225px;top:755px;animation-delay:1s}.a4{right:55px;top:685px;animation-delay:1.4s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+.floor{position:absolute;left:-10%;right:-10%;bottom:120px;height:360px;background:repeating-linear-gradient(0deg,transparent 0 48px,#d9eaff22 49px 51px),linear-gradient(180deg,#c8d9df22,#071b3b99);clip-path:polygon(30% 0,70% 0,100% 100%,0 100%)}
+.notice{position:absolute;left:22px;right:22px;bottom:175px;height:66px;display:flex;align-items:center;justify-content:center;text-align:center;font:bold 20px Arial;color:#fff2c8}
+.command{position:absolute;left:22px;right:22px;bottom:92px;text-align:center;font:16px Arial;color:#dff3ff}
+.footer{position:absolute;bottom:30px;left:0;right:0;text-align:center;font:12px Arial;color:#d3e5f0;opacity:.9}
+.spark{position:absolute;color:#fff6c9;text-shadow:0 0 12px #fff;font-size:24px;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{from{opacity:.2;transform:scale(.7)}to{opacity:1;transform:scale(1.2)}}
+@media(max-aspect-ratio:9/16){#stage{transform:scale(calc(100vw / 720))}} 
+</style>
+</head>
+<body>
+<div id="stage">
+ <div class="moon"></div><div class="mountain m1"></div><div class="mountain m2"></div>
+ <div class="title">THIÊN ĐẠO TÔNG</div><div class="subtitle">TU TIÊN LIVE · VẠN KIẾP TRANH PHONG</div>
+ <div class="stats panel">
+  <div class="stat"><small>ĐỆ TỬ</small><span id="members">128</span></div>
+  <div class="stat"><small>TỔNG TU VI</small><span id="power">86.520</span></div>
+  <div class="stat"><small>ĐANG XEM</small><span id="viewers">36</span></div>
+ </div>
+ <div class="palace"><div class="roof"></div><div class="columns"></div></div><div class="steps"></div>
+ <div class="rank panel"><h3>✦ TOP TU VI ✦</h3><div id="ranking">
+  <div class="entry"><span class="num">1</span><span class="name">Đạo Hữu Minh</span><span class="score">12.800</span></div>
+  <div class="entry"><span class="num">2</span><span class="name">Linh Nhi</span><span class="score">9.650</span></div>
+  <div class="entry"><span class="num">3</span><span class="name">Kiếm Khách</span><span class="score">8.200</span></div>
+  <div class="entry"><span class="num">4</span><span class="name">Vân Tông</span><span class="score">6.100</span></div>
+  <div class="entry"><span class="num">5</span><span class="name">Tiểu Long</span><span class="score">4.900</span></div>
+ </div></div>
+ <div class="rules panel"><h3>LUẬT TÔNG MÔN</h3><p>💬 <b>!nhapmon</b><br>Gia nhập tông môn</p><p>⚔️ <b>!top</b><br>Xem bảng tu vi</p><p>🌸 <b>Follow</b><br>Nhận danh hiệu đệ tử</p><p>🎁 <b>Quà tặng</b><br>Tăng tu vi</p></div>
+ <div class="stage-label">✧ TIÊN MÔN · TỤ LINH ĐÀI ✧</div>
+ <div class="avatar a1"><div class="aura">🧙</div><div class="label">Đạo Hữu 01</div></div>
+ <div class="avatar a2"><div class="aura">🧝</div><div class="label">Linh Nhi</div></div>
+ <div class="avatar a3"><div class="aura">🥷</div><div class="label">Kiếm Khách</div></div>
+ <div class="avatar a4"><div class="aura">🧙‍♀️</div><div class="label">Vân Tiên Tử</div></div>
+ <div class="floor"></div>
+ <div class="notice panel" id="notice">✨ Chào mừng đạo hữu đến với Thiên Đạo Tông ✨</div>
+ <div class="command">Bình luận <b>!nhapmon</b> để nhập môn · <b>!top</b> để xem tu vi</div>
+ <div class="footer">GIAO DIỆN DEMO 2D · DỮ LIỆU MẪU, CHƯA KẾT NỐI SỰ KIỆN TIKFINITY</div>
+ <span class="spark" style="left:8%;top:48%">✦</span><span class="spark" style="right:9%;top:58%;animation-delay:.7s">✧</span><span class="spark" style="left:50%;top:67%;animation-delay:1.2s">✦</span>
+</div>
+<script>
+function fit(){const s=document.getElementById('stage');const scale=Math.min(innerWidth/720,innerHeight/1280);s.style.transform=`scale(${scale})`;s.style.transformOrigin='top left';}
+addEventListener('resize',fit);fit();
+// Demo controls: click notice to cycle a few sample welcome messages.
+const msgs=['✨ Chào mừng đạo hữu đến với Thiên Đạo Tông ✨','🌸 Đệ tử mới đã nhập môn! Chúc đạo hữu sớm thành tiên!','⚔️ Tụ linh đài mở cửa — cùng nhau tu luyện!'];
+let i=0;document.getElementById('notice').addEventListener('click',()=>{i=(i+1)%msgs.length;document.getElementById('notice').textContent=msgs[i];});
+</script>
+</body></html>
